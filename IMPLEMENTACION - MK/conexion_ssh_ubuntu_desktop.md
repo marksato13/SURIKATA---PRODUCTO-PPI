@@ -185,6 +185,34 @@ chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
 chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
 ```
 
+### Bloque completo listo para pegar si trabajaste como root
+Si ya creaste los archivos bajo `/root/ppi-lab`, usa este bloque completo para moverlos al home correcto del usuario y dejarlos visibles en el escritorio:
+
+```bash
+ls -l /root/ppi-lab/desktop
+
+mkdir -p /home/m4rk/ppi-lab/desktop
+mkdir -p /home/m4rk/ppi-lab/scripts
+mkdir -p /home/m4rk/Escritorio
+
+cp /root/ppi-lab/desktop/conectar-sensor.desktop /home/m4rk/ppi-lab/desktop/
+cp /root/ppi-lab/desktop/conectar-servidor.desktop /home/m4rk/ppi-lab/desktop/
+cp /root/ppi-lab/scripts/conectar_sensor.sh /home/m4rk/ppi-lab/scripts/
+cp /root/ppi-lab/scripts/conectar_servidor.sh /home/m4rk/ppi-lab/scripts/
+
+chown -R m4rk:m4rk /home/m4rk/ppi-lab
+
+cp /home/m4rk/ppi-lab/desktop/conectar-sensor.desktop /home/m4rk/Escritorio/
+cp /home/m4rk/ppi-lab/desktop/conectar-servidor.desktop /home/m4rk/Escritorio/
+
+chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-sensor.desktop
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-servidor.desktop
+
+ls -l /home/m4rk/Escritorio
+```
+
 ## Si Ubuntu bloquea el lanzador
 Puede que Ubuntu marque el `.desktop` como no confiable. En ese caso:
 - clic derecho en el archivo
