@@ -145,6 +145,46 @@ chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
 chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
 ```
 
+## Si por error creaste los archivos en `/root/ppi-lab`
+Si ejecutaste los comandos como `root`, es posible que toda la estructura se haya creado en:
+
+```bash
+/root/ppi-lab
+```
+
+En ese caso, no debes copiar desde `/home/m4rk/ppi-lab` porque esa ruta aun no existira. Primero mueve o copia el contenido al home correcto del usuario `m4rk`.
+
+### Verificar donde quedaron los archivos
+```bash
+ls -l /root/ppi-lab/scripts
+ls -l /root/ppi-lab/desktop
+```
+
+### Crear la estructura correcta en el home de `m4rk`
+```bash
+mkdir -p /home/m4rk/ppi-lab/scripts
+mkdir -p /home/m4rk/ppi-lab/desktop
+```
+
+### Copiar los archivos desde `/root/ppi-lab` hacia `/home/m4rk/ppi-lab`
+```bash
+cp /root/ppi-lab/scripts/conectar_sensor.sh /home/m4rk/ppi-lab/scripts/
+cp /root/ppi-lab/scripts/conectar_servidor.sh /home/m4rk/ppi-lab/scripts/
+cp /root/ppi-lab/desktop/conectar-sensor.desktop /home/m4rk/ppi-lab/desktop/
+cp /root/ppi-lab/desktop/conectar-servidor.desktop /home/m4rk/ppi-lab/desktop/
+chown -R m4rk:m4rk /home/m4rk/ppi-lab
+```
+
+### Copiar los accesos al escritorio del usuario
+```bash
+cp /home/m4rk/ppi-lab/desktop/conectar-sensor.desktop /home/m4rk/Escritorio/
+cp /home/m4rk/ppi-lab/desktop/conectar-servidor.desktop /home/m4rk/Escritorio/
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-sensor.desktop
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-servidor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
+```
+
 ## Si Ubuntu bloquea el lanzador
 Puede que Ubuntu marque el `.desktop` como no confiable. En ese caso:
 - clic derecho en el archivo
