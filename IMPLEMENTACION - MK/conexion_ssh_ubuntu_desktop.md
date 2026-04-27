@@ -304,6 +304,42 @@ gnome-terminal -- bash -c "ssh m4rk@192.168.0.110; exec bash"
 gnome-terminal -- bash -c "ssh m4rk@192.168.0.120; exec bash"
 ```
 
+## Condicion real para que el clic funcione sin contrasena
+Para que al presionar el acceso `.desktop` o ejecutar el `.sh` entres directamente sin escribir `cisco123`, deben cumplirse estas condiciones:
+1. la clave SSH ya fue generada en la VM cliente;
+2. la clave publica ya fue copiada al sensor y al servidor;
+3. la prueba manual con `ssh` ya entra sin pedir contrasena.
+
+El acceso `.desktop` por si solo no elimina la contrasena. Solo abre el comando `ssh`. La autenticacion sin contrasena depende de que la clave SSH ya este correctamente instalada en las maquinas remotas.
+
+## Prueba manual obligatoria antes del clic
+Antes de probar el acceso directo, ejecuta manualmente desde la VM cliente:
+
+```bash
+ssh m4rk@192.168.0.110
+ssh m4rk@192.168.0.120
+```
+
+### Interpretacion del resultado
+- Si entra directo, el acceso con clic ya deberia funcionar sin contrasena.
+- Si todavia pide `cisco123`, entonces la clave publica aun no quedo bien instalada en la VM remota.
+
+## Flujo correcto resumido
+```text
+Generar clave SSH
+-> Copiar clave publica con ssh-copy-id
+-> Probar acceso manual sin contrasena
+-> Usar .sh
+-> Usar .desktop con un clic
+```
+
+## Orden correcto de implementacion
+1. Generar la clave SSH en la VM cliente.
+2. Copiar la clave publica a `192.168.0.110`.
+3. Copiar la clave publica a `192.168.0.120`.
+4. Confirmar que `ssh` entra sin contrasena a ambas VMs.
+5. Recién despues usar los accesos `.desktop`.
+
 ## Opcion no recomendada: guardar la contrasena en comando
 Existe la posibilidad de usar `sshpass`, por ejemplo:
 
