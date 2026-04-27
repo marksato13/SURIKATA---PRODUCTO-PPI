@@ -119,10 +119,30 @@ chmod +x ~/ppi-lab/desktop/conectar-servidor.desktop
 
 ## Copiarlos al escritorio
 ```bash
-cp ~/ppi-lab/desktop/conectar-sensor.desktop ~/Desktop/
-cp ~/ppi-lab/desktop/conectar-servidor.desktop ~/Desktop/
-chmod +x ~/Desktop/conectar-sensor.desktop
-chmod +x ~/Desktop/conectar-servidor.desktop
+cp /home/m4rk/ppi-lab/desktop/conectar-sensor.desktop /home/m4rk/Escritorio/
+cp /home/m4rk/ppi-lab/desktop/conectar-servidor.desktop /home/m4rk/Escritorio/
+chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
+```
+
+## Aclaracion sobre la carpeta Escritorio
+En Ubuntu en espanol, la carpeta correcta del usuario suele ser:
+
+```bash
+/home/m4rk/Escritorio
+```
+
+Si estas trabajando como `root`, no conviene usar `~/Escritorio`, porque `~` apuntaria al home de `root` y no al home del usuario `m4rk`. Para evitar errores, en este escenario se recomienda usar siempre rutas completas.
+
+## Si estas ejecutando comandos como root
+Despues de crear o copiar archivos en el home del usuario `m4rk`, corrige propietario y permisos:
+
+```bash
+chown -R m4rk:m4rk /home/m4rk/ppi-lab
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-sensor.desktop
+chown m4rk:m4rk /home/m4rk/Escritorio/conectar-servidor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-sensor.desktop
+chmod +x /home/m4rk/Escritorio/conectar-servidor.desktop
 ```
 
 ## Si Ubuntu bloquea el lanzador
