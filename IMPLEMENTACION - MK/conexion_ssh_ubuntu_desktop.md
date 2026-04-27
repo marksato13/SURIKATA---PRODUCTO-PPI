@@ -251,16 +251,35 @@ Esto crea:
 - clave publica: `/home/m4rk/.ssh/id_ed25519.pub`
 
 ### Paso 2. Copiar la clave publica al sensor
+Si ejecutas el comando como el usuario `m4rk`:
+
 ```bash
-ssh-copy-id m4rk@192.168.0.110
+ssh-copy-id -i ~/.ssh/id_ed25519.pub m4rk@192.168.0.110
+```
+
+Si estas logueado como `root`, debes indicar la clave publica con ruta completa:
+
+```bash
+ssh-copy-id -i /home/m4rk/.ssh/id_ed25519.pub m4rk@192.168.0.110
 ```
 
 ### Paso 3. Copiar la clave publica al servidor
+Si ejecutas el comando como el usuario `m4rk`:
+
 ```bash
-ssh-copy-id m4rk@192.168.0.120
+ssh-copy-id -i ~/.ssh/id_ed25519.pub m4rk@192.168.0.120
+```
+
+Si estas logueado como `root`, debes indicar la clave publica con ruta completa:
+
+```bash
+ssh-copy-id -i /home/m4rk/.ssh/id_ed25519.pub m4rk@192.168.0.120
 ```
 
 La primera vez te pedira la contrasena `cisco123`. Despues de eso, la clave quedara autorizada y ya no deberias volver a escribirla.
+
+### Si aparece `No identities found`
+Ese error suele ocurrir cuando ejecutas `ssh-copy-id` como `root` y la clave fue generada para el usuario `m4rk`. En ese caso, debes usar la opcion `-i` con la ruta explicita de la clave publica.
 
 ### Paso 4. Probar acceso sin contrasena
 ```bash
