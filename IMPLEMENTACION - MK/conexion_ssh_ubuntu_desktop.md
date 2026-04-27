@@ -232,3 +232,73 @@ La mejor opcion para tu caso es:
 - `.desktop` para el clic directo en Ubuntu Desktop
 
 Eso te da una solucion simple, reproducible y facil de modificar despues.
+
+## Conexion con un clic sin escribir contrasena
+Si quieres entrar con un clic sin volver a escribir la contrasena en cada conexion, la opcion recomendada no es guardar `cisco123` en texto plano, sino configurar autenticacion por clave SSH.
+
+## Opcion recomendada: clave SSH sin contrasena para laboratorio
+Esta es la forma mas limpia para tu escenario.
+
+### Paso 1. Generar una clave en la VM cliente
+Ejecuta en `192.168.0.20` como usuario `m4rk`:
+
+```bash
+ssh-keygen -t ed25519 -f /home/m4rk/.ssh/id_ed25519 -N ""
+```
+
+Esto crea:
+- clave privada: `/home/m4rk/.ssh/id_ed25519`
+- clave publica: `/home/m4rk/.ssh/id_ed25519.pub`
+
+### Paso 2. Copiar la clave publica al sensor
+```bash
+ssh-copy-id m4rk@192.168.0.110
+```
+
+### Paso 3. Copiar la clave publica al servidor
+```bash
+ssh-copy-id m4rk@192.168.0.120
+```
+
+La primera vez te pedira la contrasena `cisco123`. Despues de eso, la clave quedara autorizada y ya no deberias volver a escribirla.
+
+### Paso 4. Probar acceso sin contrasena
+```bash
+ssh m4rk@192.168.0.110
+ssh m4rk@192.168.0.120
+```
+
+Si entra directamente, ya puedes usar los accesos `.desktop` con un clic.
+
+## Ajuste recomendado en los scripts `.sh`
+Una vez configurada la clave SSH, tus scripts pueden quedar asi:
+
+### `conectar_sensor.sh`
+```bash
+#!/usr/bin/env bash
+gnome-terminal -- bash -c "ssh m4rk@192.168.0.110; exec bash"
+```
+
+### `conectar_servidor.sh`
+```bash
+#!/usr/bin/env bash
+gnome-terminal -- bash -c "ssh m4rk@192.168.0.120; exec bash"
+```
+
+## Opcion no recomendada: guardar la contrasena en comando
+Existe la posibilidad de usar `sshpass`, por ejemplo:
+
+```bash
+sshpass -p 'cisco123' ssh m4rk@192.168.0.110
+```
+
+Pero no se recomienda porque:
+- deja la contrasena expuesta en texto plano;
+- es menos limpio para documentacion tecnica;
+- es peor practica incluso en laboratorio.
+
+## Recomendacion final para tu caso
+Si ambas VMs usan la misma contrasena `cisco123`, aprovecha eso solo para el primer `ssh-copy-id` y luego trabaja con clave SSH. Asi tendras exactamente lo que quieres:
+- un clic;
+- sin escribir contrasena;
+- de forma mas profesional y mas estable.
