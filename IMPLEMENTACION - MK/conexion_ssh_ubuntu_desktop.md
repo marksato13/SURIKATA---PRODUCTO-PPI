@@ -32,6 +32,31 @@ sudo apt install -y openssh-client
     └── conectar-servidor.desktop
 ```
 
+## Comandos para crear la estructura de trabajo
+Ejecuta estos comandos en la VM Ubuntu Desktop para crear la estructura base:
+
+```bash
+mkdir -p ~/ppi-lab/scripts
+mkdir -p ~/ppi-lab/desktop
+touch ~/ppi-lab/scripts/conectar_sensor.sh
+touch ~/ppi-lab/scripts/conectar_servidor.sh
+touch ~/ppi-lab/desktop/conectar-sensor.desktop
+touch ~/ppi-lab/desktop/conectar-servidor.desktop
+```
+
+Si quieres verificar que quedo correctamente creada:
+
+```bash
+tree ~/ppi-lab
+```
+
+Si no tienes `tree` instalado, puedes instalarlo con:
+
+```bash
+sudo apt update
+sudo apt install -y tree
+```
+
 ## Script para conectar al sensor
 Archivo: `conectar_sensor.sh`
 
