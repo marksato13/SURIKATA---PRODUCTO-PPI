@@ -171,19 +171,20 @@ ip a
 ### Objetivo
 Determinar sobre que interfaz observara el trafico Suricata.
 
-### Recomendacion
-Anotar el nombre real de la interfaz, por ejemplo:
-- `ens33`
-- `eth0`
-- `enp0s3`
-
-No asumir el nombre; primero verificarlo en la VM.
-
-## Paso 7. Probar trafico visible con tcpdump
-Suponiendo que la interfaz detectada sea `ens33`:
+### Resultado confirmado en esta VM
+Segun la verificacion realizada en la VM sensor, la interfaz de captura que se utilizara en este laboratorio es:
 
 ```bash
-sudo tcpdump -i ens33 -c 20
+ens35
+```
+
+La interfaz `ens35` se encuentra activa y asociada a la IP `192.168.0.110/24`, por lo que desde este punto del documento se adopta formalmente como interfaz operativa del sensor.
+
+## Paso 7. Probar trafico visible con tcpdump
+Usando la interfaz confirmada `ens35`:
+
+```bash
+sudo tcpdump -i ens35 -c 20
 ```
 
 ### Objetivo
@@ -196,7 +197,7 @@ Archivo principal esperado:
 ```
 
 ### Revisiones minimas
-- interfaz de captura;
+- interfaz de captura `ens35`;
 - habilitacion de `eve-log`;
 - tipo de eventos a registrar;
 - ruta de logs.
@@ -208,10 +209,10 @@ Revisar que `eve-log` este habilitado y que incluya al menos:
 - `stats` si aplica
 
 ## Paso 9. Iniciar Suricata en prueba
-Ejemplo suponiendo `ens33`:
+Ejecutando Suricata sobre la interfaz confirmada `ens35`:
 
 ```bash
-sudo suricata -i ens33 -D
+sudo suricata -i ens35 -D
 ```
 
 ### Verificar proceso
